@@ -1,27 +1,22 @@
 import { Request, Response } from 'express';
-import { getCustomRepository } from 'typeorm';
-
-import { SettingsRepository } from '../repositories/SettingsRepositories';
+import { SettingsService } from '../services/SettingsService';
 
 class SettingsController {
 
     async create(request: Request, response: Response) {
         const { userName, chat } = request.body;
+        const settingsService = new SettingsService();
+        try {
 
-        const settingsRepository = getCustomRepository(SettingsRepository);
+            const newSetting = await settingsService.create(chat, userName);
 
-        const setting = await settingsRepository.findOne({ userName });
-        if (setting) {
+            return response.status(201).json(newSetting);
+
+        } catch (err) {
             return response.status(400).json({
-                message: "user already exists!",
+                message: err.message
             })
         }
-
-        const newSetting = settingsRepository.create({ userName, chat });
-
-        await settingsRepository.save(newSetting);
-
-        return response.status(201).json(newSetting);
     }
 
 }
