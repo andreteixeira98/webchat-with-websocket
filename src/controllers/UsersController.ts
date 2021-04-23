@@ -24,6 +24,12 @@ class UsersController {
 
         return response.json(user);
     }
+    async showAll(request: Request, response: Response){
+        const usersService = new UsersService();
+        const users = await usersService.showAll();
+        return response.json(users);
+    }
+
 
 }
 

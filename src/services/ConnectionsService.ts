@@ -17,7 +17,7 @@ class ConnectionsService {
 
         this.connectionsRepository = getCustomRepository(ConnectionsRepository);
     }
-    async create({ id = null, user_id, admin_id = null, socket_id }: connectionTypes) {
+    async create({ id, user_id, admin_id = null, socket_id }: connectionTypes) {
         const usersService = new UsersService();
         const userAlreadyExists = await usersService.showByUserId(user_id);
         if (!userAlreadyExists) {

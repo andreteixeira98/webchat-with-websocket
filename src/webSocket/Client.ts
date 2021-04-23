@@ -13,7 +13,7 @@ io.on("connect", (socket) => {
     console.log("entrou io.on");
 
     socket.on("client_first_access", async (params) => {
-        console.log("entrou socket.on");
+        console.log(params);
         const socket_id = socket.id;
         const { text, email } = params;
 

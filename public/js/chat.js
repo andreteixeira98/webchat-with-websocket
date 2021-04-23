@@ -8,7 +8,7 @@ document.querySelector("#start_chat").addEventListener("click", (event) => {
     chat_in_support.style.display = 'block';
 
     const email = document.getElementById('email').value;
-    const text = document.getElementById('text_help').value;
+    const text = document.getElementById('txt_help').value;
     const params = {
         email,
         text

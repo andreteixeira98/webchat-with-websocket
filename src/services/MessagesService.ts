@@ -14,7 +14,7 @@ class MessagesService {
         this.messagesRepository = getCustomRepository(MessagesRepository);
     }
 
-    async create({ admin_id = null, user_id, text }: dataMessage) {
+    async create({ admin_id, user_id, text }: dataMessage) {
 
         try {
 
