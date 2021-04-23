@@ -1,7 +1,6 @@
-
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class createMessages1619047092895 implements MigrationInterface {
+export class createMessages1619120541072 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
@@ -32,10 +31,19 @@ export class createMessages1619047092895 implements MigrationInterface {
                         type: 'timestamp',
                         default: 'now()'
                     }
+                ],
+                foreignKeys: [
+                    {
+                        name: 'FKUsers',
+                        referencedTableName: 'users',
+                        referencedColumnNames: ['id'],
+                        columnNames: ["user_id"],
+                        onDelete: "SET NULL",
+                        onUpdate: 'SET NULL'
+                    }
                 ]
-
             })
-        )
+        );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

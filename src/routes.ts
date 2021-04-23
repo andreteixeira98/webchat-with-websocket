@@ -12,7 +12,7 @@ const messagesController = new MessagesController();
 router.post('/newSetting', settingsController.create);
 router.post('/newUser', usersController.create);
 router.post('/newMessage', messagesController.create);
-router.get('/messages/:user_id', messagesController.showByUser);
+router.get('/messages/:user_id', messagesController.showByUserId);
 
 
 export default router;

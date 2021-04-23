@@ -1,5 +1,5 @@
-import { response } from "express";
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, Repository } from "typeorm";
+import { Messages } from "../models/Messages";
 import { MessagesRepository } from "../repositories/MessagesRepository";
 
 interface dataMessage {
@@ -8,20 +8,24 @@ interface dataMessage {
     text: string;
 }
 class MessagesService {
+    private messagesRepository: Repository<Messages>;
+
+    constructor() {
+        this.messagesRepository = getCustomRepository(MessagesRepository);
+    }
 
     async create({ admin_id = null, user_id, text }: dataMessage) {
 
         try {
 
-            const messagesRepository = getCustomRepository(MessagesRepository);
 
-            const newMessage = messagesRepository.create({
+            const newMessage = this.messagesRepository.create({
                 admin_id,
                 user_id,
                 text
             });
 
-            await messagesRepository.save(newMessage);
+            await this.messagesRepository.save(newMessage);
 
             return newMessage;
 
@@ -32,10 +36,11 @@ class MessagesService {
 
 
     }
-    async showByUser(user_id: string) {
-        const messagesRepository = getCustomRepository(MessagesRepository);
-        const messages = await messagesRepository.find({
-            user_id
+    async showByUserId(user_id: string) {
+
+        const messages = await this.messagesRepository.find({
+            where: { user_id },
+            relations: ["user"]
         });
         return messages;
     }

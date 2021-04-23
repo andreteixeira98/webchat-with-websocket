@@ -21,12 +21,11 @@ class MessagesController {
 
         }
     }
-    async showByUser(request: Request, response: Response) {
+    async showByUserId(request: Request, response: Response) {
         const { user_id } = request.params;
-
         const messagesService = new MessagesService();
 
-        const messages = await messagesService.showByUser(user_id);
+        const messages = await messagesService.showByUserId(user_id);
 
         if (!messages) {
             return response.status(404).json({
