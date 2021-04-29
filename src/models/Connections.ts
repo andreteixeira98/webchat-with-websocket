@@ -15,8 +15,9 @@ class Connections{
     @Column()
     user_id: string;
 
-    @ManyToOne(()=> Users)
+    
     @JoinColumn({ name:'user_id'})
+    @ManyToOne(()=> Users)
     user: Users;
 
     @Column()

@@ -10,10 +10,8 @@ io.on("connect", (socket) => {
     const usersService = new UsersService();
     const messagesService = new MessagesService();
     let user_id = null;
-    console.log("entrou io.on");
-
     socket.on("client_first_access", async (params) => {
-        console.log(params);
+
         const socket_id = socket.id;
         const { text, email } = params;
 
@@ -52,5 +50,30 @@ io.on("connect", (socket) => {
             user_id,
             text
         });
+
+        const allMessages = await messagesService.showByUserId(user_id);
+        socket.emit('client_list_all_messages', allMessages);
+
+        const allConnectionsWithoutAdmin = await connectionsService.
+            showAllWithoutAdmin();
+        io.emit("admin_all_list_users", allConnectionsWithoutAdmin);
+
+
     });
+
+    socket.on("client_to_send_admin", async (params) => {
+        const { text, socket_admin_id } = params;
+
+        const { user_id } = await connectionsService.findBySocketId(socket.id);
+
+        const message = await messagesService.create({
+            text,
+            user_id
+        });
+
+        io.to(socket_admin_id).emit("admin_receive_message", {
+            message,
+            socket_id: socket.id
+        })
+    })
 });

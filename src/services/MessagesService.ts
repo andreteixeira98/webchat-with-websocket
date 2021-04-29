@@ -1,4 +1,4 @@
-import { getCustomRepository, Repository } from "typeorm";
+import { getCustomRepository, IsNull, Repository } from "typeorm";
 import { Messages } from "../models/Messages";
 import { MessagesRepository } from "../repositories/MessagesRepository";
 
@@ -43,6 +43,15 @@ class MessagesService {
             relations: ["user"]
         });
         return messages;
+    }
+
+    async showAllMessagesWithoutAdmin() {
+        const messages = await this.messagesRepository.find({
+            where: { admin_id: IsNull() }
+        })
+
+        return messages;
+
     }
 }
 

@@ -17,5 +17,4 @@ router.post('/newMessage', messagesController.create);
 router.get('/messages/:user_id', messagesController.showByUserId);
 router.get('/users', usersController.showAll);
 
-
 export default router;
