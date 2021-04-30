@@ -1,7 +1,7 @@
 
 <!-- PROJECT LOGO -->
 
-<header align='center'>
+<header align="center">
 <br>
 <h1> Web Chat Project </h1>
 </header>
