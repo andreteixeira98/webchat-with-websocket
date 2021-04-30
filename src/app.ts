@@ -1,9 +1,11 @@
 import "reflect-metadata";
+import "dotenv/config";
 import './database';
 import express from 'express';
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io'
 import path from 'path';
+
 
 
 
